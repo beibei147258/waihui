@@ -14,21 +14,27 @@ class Coller extends Controller
      */
     public function profit()
     {
-        $balance = Db::name('balance')->field('bpid,bpprice,uid,cltime,scale')->where('bptype', 8)->select();
+        $balance = Db::name('balance')->field('bpid,bpprice,uid,remarks,cltime,scale')->where('bptype', 8)->select();
         $currentDate = time();
         if (!empty($balance)) {
             foreach ($balance as $key => $val) {
                 if ($currentDate >= $val['cltime']) {
                     $user = db('userinfo')->field('usermoney')->where('uid', $val['uid'])->find();
                     $b_data['bptype'] = 7;
-                    $b_data['bpprice'] = $val['bpprice'] * $val['scale'] / 100; //充值金额*收益比例
-                    $update['usermoney'] = $b_data['bpbalance'] = $user['usermoney']*1 + $b_data['bpprice']*1;
+                    $val['scale'] = $val['scale']*1;
+                    $val['money'] = $val['money']*1;
+                    if($val['scale'] != null){
+                    	$b_data['bpprice'] = $val['bpprice'] * $val['scale']/100; //充值金额*收益比例
+                    }elseif($val['money'] != null){
+                    	$b_data['bpprice'] = $val['money'];
+                    }
+                    $update['usermoney'] = $b_data['bpbalance'] = $user['usermoney']*1 + $b_data['bpprice'];
                     $p_date['uid'] = $val['uid'];
                     $p_date['oid'] = $val['bpid'];
                     $p_date['type'] = 3;
                     $p_date['account'] = $b_data['bpprice'];
                     $p_date['title'] = '充值';
-                    $p_date['content'] = '自动收益涨跌';
+                    $p_date['content'] = $val['remarks'];
                     $p_date['time'] = time();
                     $p_date['nowmoney'] = $b_data['bpbalance'];
                     \db('price_log')->insert($p_date);

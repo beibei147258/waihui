@@ -215,7 +215,7 @@ class User extends Base
             }
 
             if($data['usermoney'] != $data['ordusermoney']){
-                $b_data['bptype'] = 2;
+                $b_data['bptype'] = 9;
                 $b_data['bptime'] = $b_data['cltime'] = time();
                 $b_data['bpprice'] = $data['usermoney'] - $data['ordusermoney'] ;
                 //	$b_data['remarks'] = '后台管理员id'.$_SESSION['userid'].'编辑客户信息改动金额';
@@ -342,7 +342,7 @@ class User extends Base
         $selectType = 0;
         $data = input('');
         $payType = $this->conf['pay_profit'] == 1 ? ['未处理', '用户充值', '手动充值', '配置收益', '自动收益'] : ['未处理', '用户充值', '手动充值'];
-        $where['bptype'] = array('IN',array(1,2,3,4,7));
+        $where['bptype'] = array('IN',array(1,2,3,4,7,9));
         //类型
         if(isset($data['bptype']) && $data['bptype'] != ''){
             $selectType = $data['bptype'];
@@ -407,7 +407,7 @@ class User extends Base
         $balance = [];
         foreach ($balData['data'] as $key => $val){
             $val['disabled'] = 0;
-            if($val['bptype'] == 7 || ($val['collocation'] == 0 && $currentDate > $val['bptime'])){
+            if($val['bptype'] == 7 || $val['bptype'] == 9 || ($val['collocation'] == 0 && $currentDate > $val['bptime'])){
                 $val['disabled'] = 1;
             }
             $balance[$key] = $val;
@@ -450,18 +450,23 @@ class User extends Base
             }
             $data['bptime'] = $starttime = strtotime($post['starttime']);  //开始时间
             $data['bptype'] = 8;                                           //正在充值中
-            $data['remarks'] = '自动收益涨跌';
+            $data['remarks'] = '编号: '.$post['bpid'].' 自动收益涨跌';
             $data['bpprice'] = $post['money'];                             //当笔充值的金额
             $data['uid'] = $post['uid'];
             $data['bpbalance'] = 0;
             $data['isverified'] = 1;
             $post['times']= preg_replace("/(\')|(')|(，)/" ,',' , $post['times']);
             $times = explode(',', $post['times']);
-            $post['scale']= preg_replace("/(\')|(')|(，)/" ,',' , $post['scale']);
-            $scale = explode(',', $post['scale']);
+			if($post['type'] == 1){
+				$post['scale']= preg_replace("/(\')|(')|(，)/" ,',' , $post['scale']);
+				$profit = explode(',', $post['scale']);
+			}else{
+				$post['moneys']= preg_replace("/(\')|(')|(，)/" ,',' , $post['moneys']);
+				$profit = explode(',', $post['moneys']);
+			}
             $arr = [
                 'times' => [],
-                'scale' => [],
+                'profit' => [],
             ];
             //去除存在空格或者多个符号，造成值为空
             if(!empty($times)){
@@ -474,22 +479,30 @@ class User extends Base
                     }
                 }
             }
-            if(!empty($scale)){
+            if(!empty($profit)){
                 $i = 0;
-                foreach ($scale as $key=>$val){
+                foreach ($profit as $key=>$val){
                     $val = trim($val);
                     if($val != ''){
-                        $arr['scale'][$i] = $val;
+                        $arr['profit'][$i] = $val;
                         $i++;
                     }
                 }
             }
-            if(count($arr['scale']) != count($arr['times'])){
-                return WPreturn('时间间隔和盈亏比例个数不对等，或者格式不正确', -1);
-            }
+			if(count($arr['profit']) != count($arr['times'])){
+				if($post['type'] == 1){
+					return WPreturn('时间间隔和盈亏比例个数不对等，或者格式不正确', -1);
+				}else{
+					return WPreturn('时间间隔和盈亏金额个数不对等，或者格式不正确', -1);
+				}
+			}
             foreach ($arr['times'] as $key=>$val){
                 $data['cltime'] = $val;
-                $data['scale'] = $arr['scale'][$key];
+				if($post['type'] == 1){
+					$data['scale'] = $arr['profit'][$key];
+				}else{
+					$data['money'] = $arr['profit'][$key];
+				}
                 Db::name('balance')->insertGetId($data);
             }
             $where['bpid'] = $post['bpid'];
@@ -509,21 +522,27 @@ class User extends Base
     }
 
     public function execute(){
-        $balance = Db::name('balance')->field('bpid,bpprice,uid,cltime,scale')->where('bptype', 8)->select();
+        $balance = Db::name('balance')->field('bpid,bpprice,uid,cltime,remarks,scale,money')->where('bptype', 8)->select();
         $currentDate = time();
         if(!empty($balance)){
             foreach ($balance as $key=>$val){
                 if($currentDate >= $val['cltime']){
                     $user = db('userinfo')->field('usermoney')->where('uid', $val['uid'])->find();
                     $b_data['bptype'] = 7;
-                    $b_data['bpprice'] = $val['bpprice'] * $val['scale']/100; //充值金额*收益比例
-                    $update['usermoney'] = $b_data['bpbalance'] = $user['usermoney']*1 + $b_data['bpprice']*1;
+					$val['scale'] = $val['scale']*1;
+					$val['money'] = $val['money']*1;
+					if($val['scale'] != null){
+						$b_data['bpprice'] = $val['bpprice'] * $val['scale']/100; //充值金额*收益比例
+					}elseif($val['money'] != null){
+						$b_data['bpprice'] = $val['money'];
+					}
+                    $update['usermoney'] = $b_data['bpbalance'] = $user['usermoney']*1 + $b_data['bpprice'];
                     $p_date['uid'] = $val['uid'];
                     $p_date['oid'] = $val['bpid'];
                     $p_date['type'] = 3;
                     $p_date['account'] = $b_data['bpprice'];
                     $p_date['title'] = '充值';
-                    $p_date['content'] = '自动收益涨跌';
+					$p_date['content'] = $val['remarks'];
                     $p_date['time'] = time();
                     $p_date['nowmoney'] = $b_data['bpbalance'];
                     \db('price_log')->insert($p_date);
@@ -993,7 +1012,7 @@ class User extends Base
                 }
                 $_data_user = db('userinfo')->where('uid',$data['uid'])->find();
                 if($data['usermoney'] != $_data_user['usermoney']){
-                    $b_data['bptype'] = 2;
+                    $b_data['bptype'] = 9;
                     $b_data['bptime'] = $b_data['cltime'] = time();
                     $b_data['bpprice'] = $data['usermoney'] - $_data_user['usermoney'] ;
                     //	$b_data['remarks'] = '后台管理员id'.$_SESSION['userid'].'编辑客户信息改动金额';
