@@ -1,0 +1,561 @@
+html {
+    zoom: 1;
+    -ms-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    font-size: 40px;
+}
+
+html * {
+    outline: 0;
+    zoom: 1
+}
+
+html button::-moz-focus-inner {
+    border-color: transparent !important
+}
+
+body {
+    background: #fff;
+    line-height: 1.5;
+    font-size: 14px
+}
+
+body, html {
+    height: 100%
+}
+
+body, button, input, select, textarea {
+    font-family: helvetica neue, tahoma, hiragino sans gb, stheiti, wenquanyi micro hei, \5FAE\8F6F\96C5\9ED1, \5B8B\4F53, sans-serif
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: 400
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 5px
+}
+
+table th {
+    font-weight: inherit;
+    border-bottom-width: 2px;
+    border-bottom-color: #ccc
+}
+
+li, ol {
+    list-style: none
+}
+
+a {
+    outline: none;
+    color: inherit
+}
+
+a, a:active, a:hover, a:link, a:visited {
+    text-decoration: none
+}
+
+a img, fieldset {
+    border: 0
+}
+
+img {
+    width: auto \9;
+    max-width: 100%;
+    vertical-align: top;
+    height: auto;
+    display: inline-block
+}
+
+address, caption, cite, code, dfn, em, th, var，i {
+    font-style: normal;
+    font-weight: 400
+}
+
+caption, th {
+    text-align: left
+}
+
+q:after, q:before {
+    content: ""
+}
+
+em, i {
+    font-style: normal
+}
+
+button, input[type=button], input[type=date], input[type=reset], input[type=submit], input[type=text], select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    tap-highlight-color: transparent !important
+}
+
+a, input[type=password], input[type=text], select, textarea {
+    tap-highlight-color: transparent !important
+}
+
+input::-webkit-input-placeholder {
+    color: #aaa
+}
+
+input:focus::-webkit-input-placeholder {
+    color: #eee
+}
+
+*, :after, :before {
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+span {
+    display: inline-block
+}
+
+b, strong {
+    font-weight: 700
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 100%;
+    margin: 0;
+    vertical-align: baseline;
+    -webkit-tap-highlight-color: transparent
+}
+
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer
+}
+
+button[disabled], input[disabled] {
+    cursor: default
+}
+
+input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    padding: 0
+}
+
+input[type=search] {
+    -webkit-appearance: textfield;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box
+}
+
+input[type=search]::-webkit-search-decoration {
+    -webkit-appearance: none
+}
+
+input:focus {
+    outline: none
+}
+
+select[multiple], select[size], select[size][multiple] {
+    border: 1px solid #aaa;
+    padding: 0
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+    display: block
+}
+
+audio, canvas, progress, video {
+    display: inline-block
+}
+
+input::-webkit-input-speech-button {
+    display: none
+}
+
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+
+button, input {
+    border: none;
+    outline: none
+}
+
+.tj-spinner-mask {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 2090;
+
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+
+.j_loading {
+    position: absolute;
+    top: 53%;
+    left: 47%;
+    background-color: none !important;
+    z-index: 2099;
+    margin: 0 auto;
+    width: 0.8rem;
+    text-align: center;
+}
+
+#app, .box {
+    height: 100%;
+    display: flex;
+    flex-direction: column
+}
+
+.t_header {
+    height: 1.2rem !important;
+    width: 100%;
+    background-color: #181f2f;
+    display: flex;
+    flex-direction: row;
+    z-index: 1000
+}
+
+.t_header span:first-child {
+    width: 10%;
+    position: relative
+}
+
+.t_header span:first-child:active {
+    opacity: .5
+}
+
+.t_header span:first-child img {
+    display: block;
+    width: .293333rem;
+    height: .493333rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.t_header span:last-child {
+    flex: 1;
+    display: block;
+    color: #fff;
+    position: relative
+}
+
+.t_header span:last-child i {
+    font-size: .48rem;
+    position: absolute;
+    left: 46%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.f_box_mine {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #111723
+}
+
+.f_box_mine .f_mine_box {
+    flex: 1;
+    overflow-y: auto
+}
+
+.f_box_mine .f_mine_box .f_mine {
+    height: 4.133333rem;
+    background-size: 100%;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    padding-top: .266666rem;
+    color: #fff
+}
+
+.f_box_mine .f_mine_box .f_mine .img_cion {
+    width: 100%;
+    height: 1.84rem;
+    position: relative
+}
+
+.f_box_mine .f_mine_box .f_mine .img_cion .f_mine_header {
+    display: block;
+    width: 1.84rem;
+    height: 1.84rem;
+    margin: .266666rem auto;
+    border-radius: .92rem;
+    border: none
+}
+
+.f_box_mine .f_mine_box .f_mine .img_cion i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.f_box_mine .f_mine_box .f_mine p:nth-child(2) span {
+    margin: 0 auto;
+    display: block;
+    width: 60%;
+    font-size: .48rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap
+}
+
+.f_box_mine .f_mine_box .f_mine p:nth-child(3) {
+    font-size: .32rem
+}
+
+.f_box_mine .f_mine_box .f_mine p.pthy {
+    height: 1.1rem;
+    line-height: 1.1rem;
+    width: 4rem;
+    margin: 0rem auto;
+    margin-top: 0.3rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center 0;
+    border-radius: 0.1rem;
+}
+
+.f_box_mine .f_mine_box .f_tab1 {
+    height: 1.866666rem;
+    display: flex;
+    flex-direction: row
+}
+
+.f_box_mine .f_mine_box .f_tab1 span {
+    flex: 1;
+    text-align: center
+}
+
+.f_box_mine .f_mine_box .f_tab1 span p:first-child {
+    font-size: .48rem;
+    margin-top: .43333rem;
+    color: #ff3d3d
+}
+
+.f_box_mine .f_mine_box .f_tab1 span p:nth-child(2) {
+    font-size: .32rem;
+    color: #7d5dd8
+}
+
+.f_box_mine .f_mine_box .f_tab1 span + span {
+    border-left: .026666rem solid #000100
+}
+
+.f_box_mine .f_mine_box .f_tab2 {
+    height: 1.6rem;
+    display: flex;
+    flex-direction: row;
+    border-top: .026667rem solid #000100;
+    border-bottom: .026667rem solid #000100
+}
+
+.f_box_mine .f_mine_box .f_tab2 span {
+    width: 42%;
+    height: 1.066666rem;
+    line-height: 1.066666rem;
+    border-radius: .133333rem;
+    margin: auto
+}
+
+.f_box_mine .f_mine_box .f_tab2 span p {
+    font-size: .4rem;
+    letter-spacing: .1rem;
+    text-indent: .1rem;
+    text-align: center;
+    color: #fff
+}
+
+.f_box_mine .f_mine_box .f_tab2 span:first-child {
+    background: #7d5dd8
+}
+
+.f_box_mine .f_mine_box .f_tab2 span:nth-child(2) {
+    background: #cd6f24
+}
+
+.f_box_mine .f_mine_box .f_table {
+    padding-bottom: 4rem
+}
+
+.f_box_mine .f_mine_box .f_table .el-col {
+    display: flex;
+    border-right: .026667rem solid #000100;
+    border-bottom: .026667rem solid #000100;
+    height: 2.4rem;
+    color: #fff
+}
+
+.f_box_mine .f_mine_box .f_table .el-col a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+
+.f_box_mine .f_mine_box .f_table .el-col img {
+    display: block;
+    width: .9rem;
+    height: .8rem;
+    margin-top: .2rem
+}
+
+.f_box_mine .f_mine_box .f_table .el-col p {
+    height: .8rem;
+    line-height: .8rem;
+    text-align: center;
+    margin-top: .066667rem;
+    font-size: .32rem
+}
+
+.f_box_mine .f_mine_box .f_table .el-col:last-child {
+    display: flex
+}
+
+.f_box_mine .f_mine_box .f_table .el-col:last-child > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+
+.f_box_mine .f_mine_box .f_table .el-col:first-child {
+    border-left: 0 solid #000
+}
+
+.el-col-6 {
+    width: 25%
+}
+
+[class*=el-col-] {
+    float: left;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.box .footer {
+    background-color: #181f2f;
+    height: 1.4rem;
+    display: flex;
+    flex-direction: row;
+    z-index: 100;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.box .footer > div {
+    flex: 1;
+    display: flex;
+    position: relative
+}
+
+.box .footer > div a {
+    flex: 1;
+    display: flex;
+    flex-direction: column
+}
+
+.box .footer > div a i {
+    display: block;
+    width: .586667rem;
+    height: .586667rem;
+    background: url("/public/jpg/xtx/mine.png") no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+    margin-top: .173333rem
+}
+
+.box .footer > div a span {
+    flex: 1;
+    text-align: center;
+    color: #fff;
+    font-size: .293333rem;
+    margin-top: .1rem
+}
+
+.box .footer > div .router-link-exact-active span {
+    color: #b08dff
+}
+
+.box .footer div:first-child .router-link-exact-active i {
+    background: url("/public/jpg/xtx/sy.png") no-repeat;
+    background-size: contain;
+    -webkit-background-size: contain
+}
+
+.box .footer div:nth-child(2) i {
+    background: url("/public/jpg/xtx/cz.png") no-repeat;
+    background-size: cover
+}
+
+.box .footer div:nth-child(2) .router-link-exact-active i {
+    background: url("/public/jpg/xtx/cz2.png") no-repeat;
+    background-size: contain;
+    -webkit-background-size: contain
+}
+
+.box .footer div:nth-child(3) i {
+    background: url("/public/jpg/xtx/chicang.png") no-repeat;
+    background-size: cover
+}
+
+.box .footer div:nth-child(3) .router-link-exact-active i {
+    background: url("/public/jpg/xtx/chicang2.png") no-repeat;
+    background-size: contain;
+    -webkit-background-size: contain
+}
+
+.box .footer div:nth-child(4) i {
+    background: url("/public/jpg/xtx/zixun.png") no-repeat;
+    background-size: cover
+}
+
+.box .footer div:nth-child(4) .router-link-exact-active i {
+    background: url("/public/jpg/xtx/zixun2.png") no-repeat;
+    background-size: contain;
+    -webkit-background-size: contain
+}
+
+.box .footer div:nth-child(5) i {
+    background: url("/public/jpg/xtx/mine.png") no-repeat;
+    background-size: cover
+}
+
+.box .footer div:nth-child(5) .router-link-exact-active i {
+    background: url("/public/jpg/xtx/mine2.png") no-repeat;
+    background-size: contain;
+    -webkit-background-size: contain
+}
+
+.box .jun-content {
+    height: 92%;
+    width: 100%;
+    display: flex
+}
