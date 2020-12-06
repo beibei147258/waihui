@@ -309,8 +309,15 @@ class Index extends Base
     {
         $userInfo = $this->user;
         $mailcount = Db::name('mail')->where('uid', $userInfo['uid'])->where('state', '0')->count();//0未读1已读
+        $src = '';
+        foreach (cache('memberLevel') as $val){
+            if($val['name'] == $userInfo['hydj']){
+                $src = str_replace("\\", "/", $val['src']);
+            }
+        }
         $this->assign('mailcount', $mailcount);
         $this->assign('userInfo', $userInfo);
+        $this->assign('src', $src);
         return $this->fetch('mine');
     }
 
@@ -524,7 +531,6 @@ class Index extends Base
             $newpwd = strip_tags(htmlspecialchars_decode($data['newpwd']));
             $txpwd= strip_tags(htmlspecialchars_decode($data['txpwd']));
             if($newpwd == ''){return 3;}
-            if($txpwd == ''){return 4;}
             $r = db('userinfo')->where(['uid' => $uid])->update($arr);
             return json_encode(1);
         }

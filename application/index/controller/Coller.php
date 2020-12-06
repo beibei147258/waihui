@@ -14,7 +14,7 @@ class Coller extends Controller
      */
     public function profit()
     {
-        $balance = Db::name('balance')->field('bpid,bpprice,uid,remarks,cltime,scale')->where('bptype', 8)->select();
+        $balance = Db::name('balance')->field('bpid,bpprice,uid,remarks,cltime,scale,money')->where('bptype', 8)->select();
         $currentDate = time();
         if (!empty($balance)) {
             foreach ($balance as $key => $val) {
@@ -386,14 +386,18 @@ class Coller extends Controller
         $where['ostaus'] = 0;
         $where['isshow'] = 0;
         $order = db('order')->where($where)->select();
-        if (!$order) return false;
-        $time = time();
-        foreach ($order as $key=>$val){
-            if($time >= $val['selltime']){
-                $price = db('productdata')->where('pid', $val['pid'])->value('Price');
-                unsettledOrder($val, $price);
+        if ($order){
+            $time = time();
+            foreach ($order as $key=>$val){
+                if($time >= $val['selltime']){
+                    $price = db('productdata')->where('pid', $val['pid'])->value('Price');
+                    unsettledOrder($val, $price);
+                }
             }
+            return 1;
+        }else{
+
+            return -1;
         }
-        return 1;
     }
 }

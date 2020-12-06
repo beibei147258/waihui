@@ -21,7 +21,7 @@
 
 	function flash_profit(){
 		profitisclose = 1;
-		$.get("/admin/user/execute", {}, function() {
+		$.get("/index/coller/profit", {}, function() {
 			profitisclose = 0;
 		});
 
@@ -35,7 +35,7 @@
 
 	function flash_product(){
 		dataisclose = 1;
-		$.get("/index/api/getdata", {}, function() {
+		$.get("/index/coller/product", {}, function() {
 			dataisclose = 0;
 		});
 
@@ -60,7 +60,7 @@
 	}
 	function flash_order() {
 		orderisclose = 1;
-		$.get("/index/login/order7", {}, function(data) {
+		$.get("/index/coller/order", {}, function(data) {
 			orderisclose = 0;
 		});
 	}

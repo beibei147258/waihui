@@ -73,13 +73,14 @@ public function upload()
     }
 
 宝塔定时任务：
+1、
 脚本内容：
 #!/bin/bash
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 step=3
 for (( i = 0; i < 60; i=(i+step) )); do
-curl -sS --connect-timeout 10 -m 60 'https://test.nc0m4tr.cn/switch.php'
+curl -sS --connect-timeout 10 -m 60 '域名/switch.php'
 echo "----------------------------------------------------------------------------"
 endDate=`date +"%Y-%m-%d %H:%M:%S"`
 echo "★[$endDate] Successful"
@@ -87,3 +88,30 @@ echo "--------------------------------------------------------------------------
 sleep $step
 done
 exit 0
+2、
+一、写一个sh,如switch.sh  域名要加http
+#!/bin/bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+step=2 #间隔的秒数，不能大于60
+for (( i = 0; i < 60; i=(i+step) )); do
+    #php /www/wwwroot/域名/index.php index/coller/profit    #这是使用php 项目路径 执行文件目录/方法
+    #php /www/wwwroot/域名/index.php index/coller/product
+    #php /www/wwwroot/域名/index.php index/coller/order
+    curl -sS --connect-timeout 10 -m 60 '域名/switch.php'   #这是使用curl 域名/文件名
+  sleep $step
+done
+exit 0
+开放执行权限：chmond u+x /www/wwwroot/项目名/switch.sh
+二、终端加入crontab计划里  >>/tmp/test.log 2>&1  把内容写到这个日志里
+如果sh是复制过来的会出现^M
+centos6 用vi centos7用vim
+打开sh文件 vi -b /www/wwwroot/项目名/switch.sh 如果出现^M，就删除了
+crontab -e
+按i输入
+* * * * * /www/wwwroot/项目名/switch.sh 2>&1
+#* * * * * /www/wwwroot/项目名/switch.sh >>/tmp/test.log 2>&1
+按ESC :wq保存
+查看计划 crontab -l
+查看是否执行 tail -f /var/log/cron
+最后执行bash /www/wwwroot/项目名/switch.sh
