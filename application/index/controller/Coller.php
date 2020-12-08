@@ -42,9 +42,6 @@ class Coller extends Controller
                     Db::name('userinfo')->where('uid', $val['uid'])->update($update);
                 }
             }
-            return 1;
-        } else {
-            return -1;
         }
     }
 
@@ -242,7 +239,6 @@ class Coller extends Controller
             $ids = db('productdata')->where('pid',$v['pid'])->update($thisdata);
         }
         cache('nowdata',$thisdatas);
-        return 1;
     }
 
     /**
@@ -276,7 +272,6 @@ class Coller extends Controller
             }
         }
         cache('nowdata',$thisdatas);
-        return 1;
     }
 
     public function getVariation($value){
@@ -394,10 +389,6 @@ class Coller extends Controller
                     unsettledOrder($val, $price);
                 }
             }
-            return 1;
-        }else{
-
-            return -1;
         }
     }
 }
